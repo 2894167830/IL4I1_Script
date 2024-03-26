@@ -1,0 +1,13 @@
+# RMSD Matrix Calculation
+
+## rmsd2d.py Script Usage
+To calculate the RMSD matrices as presented in Figure 10, we used the `rmsd2d.py` script from Schrödinger.  The script processes .cms and .trj files to compute the RMSD matrix, targeting a specified range of amino acid residues.  The output is a .csv file containing the matrix data.
+
+### Script Configuration
+- Line 20: Specify .cms and .trj files for input.
+- Line 22: Define the amino acid residue range for RMSD calculation.
+- Line 25: Set the frame range and step size.
+- Line 29: Name the output .csv file.
+
+## Heatmap Generation
+The `heatmap_pca_ag. ipynb` script reads the RMSD matrix from the .csv file to generate the heatmap visualization.
