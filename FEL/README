@@ -1,0 +1,44 @@
+# Free Energy Landscape (FEL) Calculation README
+
+## Welcome
+
+Welcome to the FEL calculation README file. This document outlines the step-by-step process used to compute the free energy landscape. The instructions below are designed to guide you through the necessary steps to reproduce our FEL computations.
+
+## System Requirements
+
+- A 64-bit Linux operating system.
+- Maestro software for initial trajectory analysis.
+- GROMACS software for free energy calculations.
+- Python with the `xpm2png.py` script for image generation.
+
+## Step 1: Preparation of the "RMSD_RoG.xvg" File
+
+1. Use the **Simulation Events Analyze** feature in **Maestro** to analyze the dynamic trajectory files from your molecular dynamics simulation.
+2. Export the analysis results, which include the root-mean-square deviation (RMSD) and radius of gyration (RoG) of the protein's main chain, into a CSV file named "RMSD_RoG.csv".
+3. Open the CSV file in a text editor and remove all headers and annotations.
+4. Replace the comma separator with spaces or tabs.
+5. Save the modified file with the extension ".xvg".
+
+## Step 2: Execution of the `gmx sham` Command
+
+1. Open a terminal and navigate to the directory containing your "RMSD_RoG.xvg" file using the `cd` command.
+2. Run the following GROMACS command to perform the free energy calculations:
+   ```bash
+   gmx sham -tsham 310 -nlevels 100 -f RMSD_RoG.xvg -ls gibbs.xpm -g gibbs.log -lsh enthalpy.xpm -lss entropy.xpm
+## This command will generate several output files, including "gibbs.xpm", "gibbs.log", and "bindex.ndx", which are essential for further analysis.
+
+## Step 3: Generation of the 2D FEL Image
+
+Use the Python script "xpm2png.py" to process the "gibbs.xpm" file and generate a 2D FEL image:
+
+```bash
+python xpm2png.py -ip yes -f gibbs.xpm
+
+## Step 4: Selection of Low Energy Conformations
+
+Utilize the "gibbs.log" and "bindex.ndx" files to identify the lowest energy conformations from your molecular dynamics simulation. These files are instrumental in selecting conformations for subsequent validation with a docking program.
+
+##Accessing the Files
+
+All relevant scripts, data examples, and detailed method descriptions are available on our GitHub repository: IL4I1_Script.
+The molecular dynamics simulation files can be accessed on Zenodo at: 10.5281/zenodo.10473570.
