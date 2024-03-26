@@ -1,13 +1,28 @@
 # RMSD Matrix Calculation
 
-## rmsd2d.py Script Usage
-To calculate the RMSD matrices as presented in Figure 10, we used the `rmsd2d.py` script from Schrödinger.  The script processes .cms and .trj files to compute the RMSD matrix, targeting a specified range of amino acid residues.  The output is a .csv file containing the matrix data.
+## 1_calc_rmsd2d.py Script Usage
+To calculate the RMSD matrices as presented in Figure 10, we used the `1_calc_rmsd2d.py` script from Schrödinger.  The script processes .cms and .trj files to compute the RMSD matrix, targeting a specified range of amino acid residues.  The output is a .csv file containing the matrix data.It is important to note that this step will take a considerable amount of time to compute. If you wish to obtain results more quickly, consider increasing the step size to reduce the computational load.
 
 ### Script Configuration
 - Line 20: Specify .cms and .trj files for input.
+--dsim = create_simulation("md_v4_del_FAD_CIT-out.cms", "md_v4_del_FAD_CIT_trj")--
+---The files md_v4_del_FAD_CIT-out.cms and md_v4_del_FAD_CIT_trj are the molecular dynamics trajectory files designated for analysis.---
+
 - Line 22: Define the amino acid residue range for RMSD calculation.
+--'(BACKBONE and res.num 156-258)',--
+---BACKBONE indicates the type of atoms to be considered for calculating the RMSD of the residues, and res.num 156-258 specifies the range of residues to be analyzed---
+
 - Line 25: Set the frame range and step size.
+--frame_list=list(range(0,1001,1)),--
+---0 represents the starting frame for calculation, 1001 is the final frame, and 1 is the step size.---
+
 - Line 29: Name the output .csv file.
+--np.savetxt('matrix_step2_substrate_600ns.csv', rmsd_matrix, fmt='%.5f', delimiter=',')--
+---The name matrix_step2_substrate_600ns.csv is for the .csv file that will be exported, containing the RMSD matrix information---
+
+After modifying these parameters, execute the following command:
+python 1_calc_rmsd2d.py
+This will yield a .csv file containing the RMSD matrix information.
 
 ## Heatmap Generation
 The `heatmap_pca_ag. ipynb` script reads the RMSD matrix from the .csv file to generate the heatmap visualization.
